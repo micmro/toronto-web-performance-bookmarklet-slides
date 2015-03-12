@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+		<title>Tutorial: How to build a handy performance bookmarklet</title>
 
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
@@ -41,28 +41,35 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h4>DIY Performance Tooling using the Navigation, User and Resource timing API</h4>
-					<h3>Tutorial: How to build a handy performance bookmarklet</h3>
+					<h3>Tutorial:<br/>How to build a handy performance bookmarklet</h3>
 				</section>
 
 				<section>
 					<h3>A bit 'bout me</h3>
-					<p class="fragment">Karlsruhe</p>
-					<p class="fragment">Sr. Frontend Dev at Nurun (soon to be RazorFish)</p>
+					<p class="fragment">Sr. Frontend Dev at Nurun <span class="fragment">(soon to be RazorFish)</span></p>
+					<p><span class="fragment">Karlsruhe</span><span class="fragment"> > Sydney</span><span class="fragment"> > Galway</span><span class="fragment"> > Seoul</span><span class="fragment"> > Toronto</span></p>
 					<p class="fragment">@MicMro</p>
+					<p class="fragment">https://github.com/micmro</p>
 					<aside class="notes">
-						This slide has fragments which are also stepped through in the notes window.
+						<p>Fragments</p>
+						<ul>
+							<li>Work (future)</li>
+							<li>locations (5x)</li>
+							<li>Twitter</li>
+							<li>Github</li>
+						</ul>
 					</aside>
 				</section>
 
-				<!-- Example of nested vertical slides -->
+
+
 				<section>
 					<section>
-						<h2>Bookmarklets</h2>
+						<h1>Bookmarklets</h1>
 						<aside class="notes">
-							Seeing PerfMap at Velocity made me aware of the usefulness of Bookmarklets, paired with the Navigation, User and Resource timing API - so let’s look at how this can work.
-							<br/><br/>
-							Interesting bookmarklets
+							<p>Ask audience if they use Bookmarklets?</p>
+							<p>Seeing PerfMap at Velocity made me aware of the usefulness of Bookmarklets, paired with the Navigation, User and Resource timing API - so let’s look at how this can work.</p>
+							<p>Some  Interesting bookmarklets</p>
 						</aside>
 					</section>
 					<section>
@@ -98,20 +105,24 @@
 						</p>
 						<p><small><a href="https://github.com/nurun/performance-bookmarklet">https://github.com/nurun/performance-bookmarklet</a></small></p>
 						<aside class="notes">
-							Analyze Page using the Navigation, User and Resource timing API
+							<p>Analyze Page using the Navigation, User and Resource timing API</p>
+							<p><a href="http://www.meetup.com/Toronto-Web-Performance-Group/events/220287399/" target="_blank">Example (meetup page )</a></p>
+
 						</aside>
 					</section>
 				</section>
 
+
+
 				<section>
 					<section>
-						<h2>How to get started?</h2>
+						<h1>How to get started?</h1>
 						<aside class="notes">
 							<p>Show me some code!</p>
 						</aside>
 					</section>
 					<section>
-						<h3>The boilerplate</h3>
+						<h2>Bookmark boilerplate</h2>
 						<pre><code data-trim contenteditable>
 javascript:(function(){
 	var el = document.createElement('script');
@@ -130,11 +141,18 @@ javascript:(function(){
 							<p>The question is what to add into it</p>
 						</aside>
 					</section>
+					<section>
+						<h2>Installing the bookmarklet</h2>
+						<p>Via <i>Bookmark Manager</i></p>
+						<img src="./images/add-bookmarklet.png">
+					</section>
 				</section>
+
+
 
 				<section>
 					<section>
-						<h2>Navigation, User and Resource Timing API</h2>
+						<h1>Navigation, User and<br/>Resource Timing API</h1>
 						<aside class="notes">
 							Some of the most usefull tools in the bookmarklet or perf tool toolkit
 						</aside>
@@ -165,16 +183,16 @@ var connectionTime = performance.timing.responseStart - performance.timing.navig
 					<section>
 						<h2>User Timing API</h2>
 						<p>
-							<pre><code>
+							<pre><code data-trim contenteditable  style="font-size:0.9em;">
 performance.mark("startTask");
 
 setTimeout(function(){
 	performance.mark("endTask");
 
-	//measure elaps time
+	//measure elapsed time
 	performance.measure("TaskTotal", "startTask", "endTask");
 
-	//log duration
+	//output duration
 	console.log(performance.getEntriesByName("TaskTotal").duration);
 }, 500);
 							</code></pre>
@@ -205,7 +223,8 @@ setTimeout(function(){
 						</aside>
 					</section>
 					<section>
-					<pre><code data-trim contenteditable>
+						<h3>Examples</h3>
+						<pre><code data-trim contenteditable>
 var resources = performance.getEntriesByType("resource");
 console.table(resources.map(function(resource){
     return {
@@ -213,244 +232,52 @@ console.table(resources.map(function(resource){
 	    "total" : Math.round(resource.duration) + "ms"
     }
 }));
-					</code></pre>
-										<aside class="notes">
-							
-					</aside>
+						</code></pre>
+						<aside class="notes">
+							Logs a sortable table with duration of each resource
+						</aside>
 					</section>
 				</section>
 
-
-				<section>
-					<h2>Ideas</h2>
-					<ul>
-						<li>SLA quick checks</li>
-						<li>Performance Snooping</li>
-					</ul>
-					<aside class="notes">
-							
-					</aside>
-				</section>
-
-
-				<section>
-					<h2></h2>
-					<p>
-					</p>
-					<aside class="notes">
-							
-					</aside>
-				</section>
 
 				<section>
 					<section>
-						<h2>Fragment Styles</h2>
-						<p>There's different types of fragments, like:</p>
-						<p class="fragment grow">grow</p>
-						<p class="fragment shrink">shrink</p>
-						<p class="fragment roll-in">roll-in</p>
-						<p class="fragment fade-out">fade-out</p>
-						<p class="fragment current-visible">current-visible</p>
-						<p class="fragment highlight-red">highlight-red</p>
-						<p class="fragment highlight-blue">highlight-blue</p>
+						<h1>Where to go from here?</h1>
+						<aside class="notes">
+								Where to take your bookmarklet from here?
+						</aside>
+					</section>
+					<section>
+						<h2>Ideas</h2>
+						<ul>
+							<li>SLA quick checks</li>
+							<li>Performance Snooping</li>
+						</ul>
+						<aside class="notes">
+							<p>Ask Audience if they have ideas</p>
+						</aside>
+					</section>
+
+					<section>
+						<h2>Browser Extension/Addon</h2>
+						<ul>
+							<li><a href="https://github.com/micmro/bookmarklet-to-chrome-extension-boilerplate">https://github.com/micmro/bookmarklet-to-chrome-extension-boilerplate</a></li>
+							<li><a href="https://github.com/micmro/bookmarklet-to-firefox-addon-boilerplate">https://github.com/micmro/bookmarklet-to-firefox-addon-boilerplate</a></li>
+						</ul>
+						<aside class="notes">
+							<p>Projects on github to help port bookmarklets</p>
+						</aside>
 					</section>
 				</section>
 
-
 				<section>
-					<section data-background="#dddddd">
-						<h2>Slide Backgrounds</h2>
-						<p>
-							Set <code>data-background="#dddddd"</code> on a slide to change the background color. All CSS color formats are supported.
-						</p>
-						<a href="#" class="navigate-down">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png">
-						<h2>Image Backgrounds</h2>
-						<pre><code>&lt;section data-background="image.png"&gt;</code></pre>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">
-						<h2>Tiled Backgrounds</h2>
-						<pre><code style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-					</section>
-					<section data-background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm" data-background-color="#000000">
-						<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
-							<h2>Video Backgrounds</h2>
-							<pre><code style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code></pre>
-						</div>
-					</section>
-				</section>
-
-				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-					<h2>Background Transitions</h2>
-					<p>
-						Different background transitions are available via the backgroundTransition option. This one's called "zoom".
-					</p>
-					<pre><code>Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>
-				</section>
-
-				<section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">
-					<h2>Background Transitions</h2>
-					<p>
-						You can override background transitions per-slide.
-					</p>
-					<pre><code style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code></pre>
-				</section>
-
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) {
-        node.className += ' roll';
-      }
-    }
-  }
-}
-					</code></pre>
-					<p>Code syntax highlighting courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
-
-				<section>
-					<h2>Marvelous List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
-
-				<section>
-					<h2>Tabular Tables</h2>
-					<table>
-						<thead>
-							<tr>
-								<th>Item</th>
-								<th>Value</th>
-								<th>Quantity</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Apples</td>
-								<td>$1</td>
-								<td>7</td>
-							<tr>
-							<tr>
-								<td>Lemonade</td>
-								<td>$2</td>
-								<td>18</td>
-							<tr>
-							<tr>
-								<td>Bread</td>
-								<td>$3</td>
-								<td>2</td>
-							<tr>
-						</tbody>
-					</table>
-				</section>
-
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
-					</blockquote>
-				</section>
-
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
-				</section>
-
-				<section>
-					<h2>Speaker View</h2>
-					<p>There's a <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
-					<p>Press the <em>S</em> key to try it out.</p>
-
+					<h1>Thanks!</h1>
+					<h3>Any questions?</h3>
 					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+							
 					</aside>
 				</section>
 
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, here's an example:</p>
-					<iframe src="//www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-				</section>
-
-				<section>
-					<h2>Global State</h2>
-					<p>
-						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-						will be added as a class to the document element when the slide is open. This lets you
-						apply broader style changes, like switching the page background.
-					</p>
-				</section>
-
-				<section data-state="customevent">
-					<h2>State Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
-Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
-
-				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
-					</p>
-				</section>
-
-				<section>
-					<h2>Much more</h2>
-					<ul>
-						<li>Right-to-left support</li>
-						<li><a href="https://github.com/hakimel/reveal.js#api">Extensive JavaScript API</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#auto-sliding">Auto-progression</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#parallax-background">Parallax backgrounds</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#keyboard-bindings">Custom keyboard bindings</a></li>
-					</ul>
-				</section>
-
-				<section style="text-align: left;">
-					<h1>THE END</h1>
-					<p>
-						- <a href="http://slides.com">Try the online editor</a> <br>
-						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
-					</p>
-				</section>
 
 			</div>
 
