@@ -45,7 +45,7 @@
 				</section>
 
 				<section>
-					<h3>A bit 'bout me</h3>
+					<h3>A bit about me</h3>
 					<p class="fragment">Sr. Frontend Dev at Nurun <span class="fragment">(soon to be RazorFish)</span></p>
 					<p><span class="fragment">Karlsruhe</span><span class="fragment"> > Sydney</span><span class="fragment"> > Galway</span><span class="fragment"> > Seoul</span><span class="fragment"> > Toronto</span></p>
 					<p class="fragment">@MicMro</p>
@@ -53,8 +53,8 @@
 					<aside class="notes">
 						<p>Fragments</p>
 						<ul>
-							<li>Work (future)</li>
-							<li>locations (5x)</li>
+							<li>Work (future) - mainly ecomerce</li>
+							<li>originally DE - bit of a globetrotter (locations (5x))</li>
 							<li>Twitter</li>
 							<li>Github</li>
 						</ul>
@@ -95,7 +95,12 @@
 						</p>
 						<p><small><a href="https://github.com/andydavies/waterfall">https://github.com/andydavies/waterfall</a></small></p>
 						<aside class="notes">
-							Analyze DOM elements
+							<p>Analyze DOM elements</p>
+							<hr/>
+							<p>SLOW DOWN / Suspense :)</p>
+							<p>Summary:</p>
+							<p>Get runtime stats that the DevTool or F12 tools don't supply, or don't visualize in a whay that's usefull for you and your organization</p>
+							<p>And this is my take on this</p>
 						</aside>
 					</section>
 					<section>
@@ -105,6 +110,7 @@
 						</p>
 						<p><small><a href="https://github.com/nurun/performance-bookmarklet">https://github.com/nurun/performance-bookmarklet</a></small></p>
 						<aside class="notes">
+							<p>History: 3rd party count in meetings?</p>
 							<p>Analyze Page using the Navigation, User and Resource timing API</p>
 							<p><a href="http://www.meetup.com/Toronto-Web-Performance-Group/events/220287399/" target="_blank">Example (meetup page )</a></p>
 
@@ -123,28 +129,41 @@
 					</section>
 					<section>
 						<h2>Bookmark boilerplate</h2>
-						<pre><code data-trim contenteditable>
+						<p><pre><code data-trim contenteditable>
 javascript:(function(){
 	var el = document.createElement('script');
-	el.src = 'https://your-site.com/bookmarklet.js';
+	el.src = 'http://lab.michaelmrowetz.com/tutorial/test.js';
 	document.getElementsByTagName('body')[0].appendChild(el);
 })();
 						</code></pre>
+						</p>
+						<p><i style="font-size:0.75em;">*needs to be inlined</i></p>
 
 						<aside class="notes">
-							<p>This is basically it</p>
 							<ul>
 								<li>A bookmarklet is basically JS in a bookmark URL.</li>
-								<li>You can inject a JS script into the page</li>
+								<li>Inject script into the page</li>
+								<li>Needs to be Inline</li>
 								<li>Gotchas: Content Security Policy directive (CSP)</li>
 							</ul>
-							<p>The question is what to add into it</p>
+							<pre><code>javascript:(function(){var el=document.createElement("script");el.src="http://lab.michaelmrowetz.com/tutorial/test.js",document.getElementsByTagName("body")[0].appendChild(el)})();</code></pre>
+							
+							<a href="http://lab.michaelmrowetz.com/tutorial/test.js" target="_blank">js file</a>
 						</aside>
 					</section>
 					<section>
 						<h2>Installing the bookmarklet</h2>
 						<p>Via <i>Bookmark Manager</i></p>
 						<img src="./images/add-bookmarklet.png">
+
+						<aside class="notes">
+							<ul>
+								<li>Host file on Github (via ph-pages) (out of scope)</li>
+								<li>Add Bookmark Button (if not github)</li>
+							</ul>
+							<p>:) Ok I'm done</p>
+							<p>Not quite - The question is what to add into it - some suggestions</p>
+						</aside>
 					</section>
 				</section>
 
@@ -154,13 +173,14 @@ javascript:(function(){
 					<section>
 						<h1>Navigation, User and<br/>Resource Timing API</h1>
 						<aside class="notes">
-							Some of the most usefull tools in the bookmarklet or perf tool toolkit
+							<p>Some of the most usefull tools for the bookmarklet or perf toolkit</p>
+							<p>High resolution timing data (sub-ms)</p>
 						</aside>
 					</section>
 					<section>
 						<h2>Navigation Timing API</h2>
 						<p>
-							<img src="./images/navigation-timing-overview.png" style="max-width:85%; background:#fff; padding:10px;" />
+							<img src="./images/navigation-timing-overview.svg" style="max-width:85%; background:#fff; padding:10px;" />
 						</p>
 						<p>
 							<small><a href="http://www.w3.org/TR/navigation-timing/">http://www.w3.org/TR/navigation-timing</a></small>
@@ -172,28 +192,56 @@ javascript:(function(){
 						</aside>
 					</section>
 					<section>
+						<p style="margin-top:0;">
+							<img src="./images/support-navigation-timing.png" />
+						</p>
+						<p>
+							<small><a href="http://caniuse.com/#feat=nav-timing">http://caniuse.com/#feat=nav-timing</a></small>
+						</p>
+						<aside class="notes">
+							<ul>
+								<li>iOS 8.1 :(</li>
+							</ul>
+						</aside>
+					</section>
+					<section>
 						<h3>Examples</h3>
 						<p><code>performance.timing</code></p>
 						<pre><code data-trim contenteditable style="font-size:0.75em;">
-var totalRequest = performance.timing.domComplete - performance.timing.navigationStart;
+var fullNetwork = performance.timing.responseEnd - performance.timing.navigationStart;
 var connectionTime = performance.timing.responseStart - performance.timing.navigationStart;
+
+alert("fullNetwork: " + fullNetwork + "ms\nconnectionTime: " + connectionTime + "ms");
 						</code></pre>
+						<aside class="notes">
+							<ul>
+								<li><a href="http://caniuse.com/#feat=navigation-timing" target="_blank">Support</a></li>
+							</ul>
+							<pre><code>javascript:(function(){var el=document.createElement("script");el.src="http://lab.michaelmrowetz.com/tutorial/bookmarklet-nav-time.js",document.getElementsByTagName("body")[0].appendChild(el)})();</code></pre>
+							<p>
+								<a href="http://lab.michaelmrowetz.com/tutorial/bookmarklet-nav-time.js" target="_blank">js file</a>
+							</p>
+						</aside>
 					</section>
+
 
 					<section>
 						<h2>User Timing API</h2>
 						<p>
 							<pre><code data-trim contenteditable  style="font-size:0.9em;">
+//set start mark
 performance.mark("startTask");
 
+//task
 setTimeout(function(){
+	//set end marker
 	performance.mark("endTask");
 
 	//measure elapsed time
 	performance.measure("TaskTotal", "startTask", "endTask");
 
-	//output duration
-	console.log(performance.getEntriesByName("TaskTotal").duration);
+	var duration = performance.getEntriesByName("TaskTotal")[0].duration;
+	alert("total: " + duration + "ms");
 }, 500);
 							</code></pre>
 						</p>
@@ -202,15 +250,36 @@ setTimeout(function(){
 						</p>
 						<aside class="notes">
 							<ul>
-								<li>e.g. to emasure XHR requests or code</li>
+								<li>e.g. to emasure XHR requests or code</li>		
+								<li><a href="http://caniuse.com/#feat=user-timing" target="_blank">Support</a></li>
+							</ul>
+							<p>
+							<pre><code>javascript:(function(){var el=document.createElement("script");el.src="http://lab.michaelmrowetz.com/tutorial/bookmarklet-user-time.js",document.getElementsByTagName("body")[0].appendChild(el)})();</code></pre></p>
+							<p>
+								<a href="http://lab.michaelmrowetz.com/tutorial/bookmarklet-user-time.js" target="_blank">js file</a>
+							</p>
+						</aside>
+					</section>
+					<section>
+						<p>
+							<img src="./images/support-user-timing.png" />
+						</p>
+						<p>
+							<small><a href="http://caniuse.com/#feat=user-timing">http://caniuse.com/#feat=user-timing</a></small>
+						</p>
+						<aside class="notes">
+							<ul>
+								<li>Safari :(</li>
 							</ul>
 						</aside>
 					</section>
 
+
+
 					<section>
 						<h2>Resource Timing API</h2>
 						<p>
-							<img src="./images/resource-timing-overview.png" />
+							<img src="./images/resource-timing-overview.svg" />
 						</p>
 						<p>
 							<small><a href="http://www.w3.org/TR/resource-timing">http://www.w3.org/TR/resource-timing</a></small>
@@ -218,7 +287,22 @@ setTimeout(function(){
 						<aside class="notes">
 							<ul>
 								<li>Similar to Navigation timing but for assetes</li>
-								<li>Gotcha blocking</li>
+								<li>Gotcha: Duration includes Blocking</li>
+								<li>Cross origin timing shows duration only</li>
+								<li><a href="http://caniuse.com/#feat=resource-timing" target="_blank">Support</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section>
+						<p style="margin-top:0;">
+							<img src="./images/support-resource-timing.png" />
+						</p>
+						<p>
+							<small><a href="http://caniuse.com/#feat=resource-timing">http://caniuse.com/#feat=resource-timing</a></small>
+						</p>
+						<aside class="notes">
+							<ul>
+								<li>Safari again</li>
 							</ul>
 						</aside>
 					</section>
@@ -234,7 +318,15 @@ console.table(resources.map(function(resource){
 }));
 						</code></pre>
 						<aside class="notes">
-							Logs a sortable table with duration of each resource
+							<ul>
+								<li>Logs a sortable table with duration of each resource</li>
+							</ul>
+							
+							<p>
+							<pre><code>javascript:(function(){var el=document.createElement("script");el.src="http://lab.michaelmrowetz.com/tutorial/bookmarklet-resource-time.js",document.getElementsByTagName("body")[0].appendChild(el)})();</code></pre></p>
+							<p>
+								<a href="http://lab.michaelmrowetz.com/tutorial/bookmarklet-resource-time.js" target="_blank">js file</a>
+							</p>
 						</aside>
 					</section>
 				</section>
@@ -250,21 +342,31 @@ console.table(resources.map(function(resource){
 					<section>
 						<h2>Ideas</h2>
 						<ul>
-							<li>SLA quick checks</li>
-							<li>Performance Snooping</li>
+							<li class="fragment">Service-level agreement quick checks</li>
+							<li class="fragment">New visualizations</li>
+							<li class="fragment">Performance Snooping</li>
+							<li class="fragment">Meeting helper</li>
 						</ul>
 						<aside class="notes">
-							<p>Ask Audience if they have ideas</p>
+							<ul>
+								<li>SLA (Service-level agreement) - like Etzy</li>
+								<li>Ask Audience if they have ideas</li>
+							</ul>
 						</aside>
 					</section>
 
 					<section>
 						<h2>Browser Extension/Addon</h2>
-						<ul>
+						<ul class="fragment">
 							<li><a href="https://github.com/micmro/bookmarklet-to-chrome-extension-boilerplate">https://github.com/micmro/bookmarklet-to-chrome-extension-boilerplate</a></li>
 							<li><a href="https://github.com/micmro/bookmarklet-to-firefox-addon-boilerplate">https://github.com/micmro/bookmarklet-to-firefox-addon-boilerplate</a></li>
 						</ul>
 						<aside class="notes">
+							<ul>
+								<li>Port your bookmarklet to browser externsion</li>
+								<li>Visibility, more access rights</li>
+							</ul>
+
 							<p>Projects on github to help port bookmarklets</p>
 						</aside>
 					</section>
