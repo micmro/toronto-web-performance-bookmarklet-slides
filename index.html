@@ -180,6 +180,7 @@ javascript:(function(){
 								<li>Inject script into the page</li>
 								<li>Needs to be Inline</li>
 								<li>Gotchas: Content Security Policy directive (CSP)</li>
+								<li>same origin policy / Cross-site scripting</li>
 							</ul>
 							<pre><code>javascript:(function(){var el=document.createElement("script");el.src="http://lab.michaelmrowetz.com/tutorial/test.js",document.getElementsByTagName("body")[0].appendChild(el)})();</code></pre>
 							
@@ -263,9 +264,9 @@ alert("fullNetwork: " + fullNetwork + "ms\nconnectionTime: " + connectionTime + 
 							</p>
 						</aside>
 					</section>
-					<section data-background="./images/navigation.jpg">
+					<section data-background="./images/lean-back.jpg">
 						<aside class="notes">
-							Pretty good isn't it?
+							But it's not time to lean back yet
 						</aside>
 					</section>
 
@@ -321,7 +322,7 @@ setTimeout(function(){
 					</section>
 					<section data-background="./images/random.jpg">
 						<aside class="notes">
-							Damn
+							He's calling Apple to ask them to hurry up
 						</aside>
 					</section>
 
@@ -427,10 +428,17 @@ console.table(resources.map(function(resource){
 						<aside class="notes">
 							<ul>
 								<li>Port your bookmarklet to browser externsion</li>
-								<li>Visibility, more access rights</li>
+								<li>Visibility (Chrome Web Store, addons.mozilla.org)</li>
+								<li>Content Security Policy directive (CSP)</li>
+								<li>more permissions/priviledged access</li>
 							</ul>
 
 							<p>Projects on github to help port bookmarklets</p>
+						</aside>
+					</section>
+					<section data-background="./images/call.jpg">
+						<aside class="notes">
+							Call your friends to start the next Hackathon
 						</aside>
 					</section>
 				</section>
